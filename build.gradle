@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+    id 'net.serenity-bdd.serenity-gradle-plugin' version '3.1.15'
+}
+
+group 'demoblaze'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.apache.logging.log4j:log4j-core:2.17.1'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'net.serenity-bdd:serenity-core:3.1.15'
+    testImplementation 'net.serenity-bdd:serenity-cucumber:3.1.15'
+
+}
+
+defaultTasks 'clean', 'test', 'aggregate'
+
+tasks {
+    clean {
+        delete "${rootDir}/build"
+        delete "${rootDir}/target"
+    }
+}
+
+test {
+    testLogging.showStandardStreams = true
+    systemProperties System.getProperties()
+}
+
+test.finalizedBy(aggregate)
